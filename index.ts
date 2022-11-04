@@ -1,24 +1,24 @@
 
-interface Persona {
+interface IPersona {
     id: string | number
     edad: number
     nombre: string
     apellido: string
     lugarResidencia: string
     esEstudiante?: boolean
-    fotoIdentidad: FotoIdentidad
+    fotoIdentidad?: IFotoIdentidad
+    estadoCivil: "Casado" | "Soltero" | "Viudo" | "Divorciado" | "Union Libre"
     caminar(cantidadKilometrosCaminados: number): number
     dormir(horasSueno: number): number
 }
 
-interface FotoIdentidad{
+interface IFotoIdentidad{
     src: string
     alt: string
     alto: number
     ancho: number
     formato: string
 }
-
 
 let algoDeTexto: string = "Hola mundo"
 
@@ -32,7 +32,7 @@ function dormir(horasSueno : number) : number{
     return horasSueno * 2
 }
 
-let persona1: Persona = {
+let persona1: IPersona = {
     id: "1567658769",
     edad: 18,
     apellido: "Skywalker",
@@ -44,13 +44,14 @@ let persona1: Persona = {
         ancho: 250,
         formato: "png"
     },
+    estadoCivil: "Casado",
     lugarResidencia: "Direccion",
     caminar: caminar,
     dormir: dormir
 }
 
 
-let persona2: Persona = {
+let persona2: IPersona = {
     id: 1567658769,
     edad: 18,
     apellido: "Skywalker",
@@ -64,6 +65,7 @@ let persona2: Persona = {
     },
     lugarResidencia: "Direccion",
     esEstudiante: true,
+    estadoCivil: "Casado",
     caminar: (cantidadKilometrosCaminados: number) => {
         return 1
     },
@@ -72,7 +74,7 @@ let persona2: Persona = {
     }
 }
 
-let persona3: Persona = {
+let persona3: IPersona = {
     id: "1567658769",
     edad: 18,
     apellido: "Skywalker",
@@ -84,6 +86,7 @@ let persona3: Persona = {
         ancho: 250,
         formato: "png"
     },
+    estadoCivil: "Union Libre",
     lugarResidencia: "Direccion",
     caminar: caminar,
     dormir: dormir
@@ -108,6 +111,110 @@ let persona4: Persona ={
 }
 */
 
-let listadoPersonas: Persona[] = []
+let listadoPersonas: IPersona[] = []
+
+const persona5 = {}
 
 listadoPersonas.push(persona1)
+
+//listadoPersonas.push(persona5)
+
+
+function distintosValores(tipoRetorno: string): number | void {
+    if(tipoRetorno == 'number'){
+        return 1
+    }
+}
+
+console.log(distintosValores('number'))
+console.log(distintosValores('otro'))
+
+class Alumno implements IPersona{
+id: string|number
+edad: number
+nombre: string
+apellido: string
+lugarResidencia: string
+esEstudiante?: boolean|undefined
+fotoIdentidad?: IFotoIdentidad
+estadoCivil: "Casado"|"Soltero"|"Viudo"|"Divorciado"|"Union Libre"
+
+constructor(id: string | number, edad: number, nombre: string, apellido: string, lugarResidencia: string, fotoIdentidad?: IFotoIdentidad){
+    this.id = id
+    this.edad = edad
+    this.nombre = nombre
+    this.apellido = apellido
+    this.lugarResidencia = lugarResidencia
+    //this.fotoIdentidad = fotoIdentidad
+    this.estadoCivil = "Soltero"
+}
+
+caminar(cantidadKilometrosCaminados: number): number {
+    return 2 * cantidadKilometrosCaminados
+}
+dormir(horasSueno: number): number {
+    return 4 * horasSueno
+}
+
+}
+
+class Maestro implements IPersona{
+id: string|number
+edad: number
+nombre: string
+apellido: string
+lugarResidencia: string
+esEstudiante?: boolean|undefined
+fotoIdentidad?: IFotoIdentidad
+estadoCivil: "Casado"|"Soltero"|"Viudo"|"Divorciado"|"Union Libre"
+
+constructor(id: string | number, edad: number, nombre: string, apellido: string, lugarResidencia: string, fotoIdentidad?: IFotoIdentidad){
+    this.id = id
+    this.edad = edad
+    this.nombre = nombre
+    this.apellido = apellido
+    this.lugarResidencia = lugarResidencia
+    this.fotoIdentidad = fotoIdentidad
+    this.estadoCivil = "Soltero"
+}
+
+caminar(cantidadKilometrosCaminados: number): number {
+    return cantidadKilometrosCaminados * 5
+}
+dormir(horasSueno: number): number {
+    return horasSueno * 0.5
+}
+    
+}
+
+let persona6 = new Maestro(1, 20, "Luke", "Skywalker", "Honduras")
+console.log(persona6.caminar(5))
+let persona7 = new Alumno(2, 18, "Leia", "Organa", "Honduras")
+console.log(persona7.caminar(5))
+
+listadoPersonas.push(persona6)
+listadoPersonas.push(persona7)
+
+
+///////Ejercicio peliculas
+
+interface IPelicula{
+    titulo: string
+    anual: IEnlace
+    duracion?: string
+    clasificacion: IEnlace
+    videoPrincipal: IMultimedia
+    videos: IMultimedia[]
+    fotos: IMultimedia[]
+}
+
+interface IEnlace{
+    url: string
+    texto: string
+}
+
+interface IMultimedia{
+    src: string
+    textoAlternativo: string
+    tipo: "imagen" | "video"
+}
